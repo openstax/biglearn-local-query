@@ -14,27 +14,91 @@ RSpec.shared_examples 'a biglearn scheduler client' do
     }
   end
 
-  random_sorted_numbers = 3.times.map { rand }.sort
-  dummy_ecosystem_uuid = SecureRandom.uuid
-  dummy_clue_data = {
-    minimum: random_sorted_numbers.first,
-    most_likely: random_sorted_numbers.second,
-    maximum: random_sorted_numbers.third,
+  random_sorted_numbers_1 = 3.times.map { rand }.sort
+  clue_data_1 = {
+    minimum: random_sorted_numbers_1.first,
+    most_likely: random_sorted_numbers_1.second,
+    maximum: random_sorted_numbers_1.third,
     is_real: [true, false].sample,
-    ecosystem_uuid: dummy_ecosystem_uuid
+    ecosystem_uuid: SecureRandom.uuid
+  }
+  random_sorted_numbers_2 = 3.times.map { rand }.sort
+  clue_data_2 = {
+    minimum: random_sorted_numbers_2.first,
+    most_likely: random_sorted_numbers_2.second,
+    maximum: random_sorted_numbers_2.third,
+    is_real: [true, false].sample,
+    ecosystem_uuid: SecureRandom.uuid
   }
 
-  dummy_exercise_uuids = rand(10).times.map { SecureRandom.uuid }
+  exercise_uuids_1 = rand(10).times.map { SecureRandom.uuid }
+  exercise_uuids_2 = rand(10).times.map { SecureRandom.uuid }
 
   when_tagged_with_vcr = { vcr: ->(v) { !!v } }
 
   before(:all, when_tagged_with_vcr) do
     VCR.configure do |config|
-      config.define_cassette_placeholder('<EXERCISE UUIDS>'       ) { dummy_exercise_uuids }
+      config.define_cassette_placeholder('<CLUE DATA 1>'     ) { clue_data_1      }
+      config.define_cassette_placeholder('<CLUE DATA 2>'     ) { clue_data_2      }
+      config.define_cassette_placeholder('<EXERCISE UUIDS 1>') { exercise_uuids_1 }
+      config.define_cassette_placeholder('<EXERCISE UUIDS 2>') { exercise_uuids_2 }
     end
   end
 
-  [].group_by(&:first).each do |method, examples|
+  [
+    [
+      :fetch_clue_calculations,
+      { algorithm_name: OpenStax::Biglearn::Scheduler::DEFAULT_ALGORITHM_NAME },
+      { clue_calculations: [] }
+    ],
+    [
+      :fetch_exercise_calculations,
+      { algorithm_name: OpenStax::Biglearn::Scheduler::DEFAULT_ALGORITHM_NAME },
+      { exercise_calculations: [] }
+    ],
+    [
+      :update_clue_calculations,
+      [
+        {
+          algorithm_name: OpenStax::Biglearn::Scheduler::DEFAULT_ALGORITHM_NAME,
+          clue_data: clue_data_1
+        },
+        {
+          algorithm_name: OpenStax::Biglearn::Scheduler::DEFAULT_ALGORITHM_NAME,
+          clue_data: clue_data_2
+        }
+      ],
+      [
+        {
+          calculation_status: 'calculation_accepted'
+        },
+        {
+          calculation_status: 'calculation_accepted'
+        }
+      ]
+    ],
+    [
+      :update_exercise_calculations,
+      [
+        {
+          algorithm_name: OpenStax::Biglearn::Scheduler::DEFAULT_ALGORITHM_NAME,
+          exercise_uuids: exercise_uuids_1
+        },
+        {
+          algorithm_name: OpenStax::Biglearn::Scheduler::DEFAULT_ALGORITHM_NAME,
+          exercise_uuids: exercise_uuids_2
+        }
+      ],
+      [
+        {
+          calculation_status: 'calculation_accepted'
+        },
+        {
+          calculation_status: 'calculation_accepted'
+        }
+      ]
+    ]
+  ].group_by(&:first).each do |method, examples|
     context "##{method}" do
       examples.each_with_index do |(method, requests, expected_responses, uuid_key), index|
         uuid_key ||= :calculation_uuid

@@ -8,7 +8,7 @@ module OpenStax
   module Biglearn
     module Scheduler
 
-      ALGORITHM_NAME = 'local_query'.freeze
+      DEFAULT_ALGORITHM_NAME = 'local_query'.freeze
 
       mattr_accessor :client
 
@@ -20,6 +20,36 @@ module OpenStax
 
         def configure
           yield configuration
+        end
+
+        def fetch_clue_calculations(request = {})
+          single_api_request method: :fetch_clue_calculations,
+                             request: { algorithm_name: DEFAULT_ALGORITHM_NAME }.merge(request),
+                             keys: [ :algorithm_name ]
+        end
+
+        def fetch_exercise_calculations(request = {})
+          single_api_request method: :fetch_exercise_calculations,
+                             request: { algorithm_name: DEFAULT_ALGORITHM_NAME }.merge(request),
+                             keys: [ :algorithm_name ]
+        end
+
+        def update_clue_calculations(clue_calculation_update_requests)
+          requests = clue_calculation_update_requests.map do |request|
+            { algorithm_name: DEFAULT_ALGORITHM_NAME }.merge request
+          end
+          bulk_api_request method: :update_clue_calculations,
+                           requests: requests,
+                           keys: [ :algorithm_name, :clue_data ]
+        end
+
+        def update_exercise_calculations(exercise_calculation_update_requests)
+          requests = exercise_calculation_update_requests.map do |request|
+            { algorithm_name: DEFAULT_ALGORITHM_NAME }.merge request
+          end
+          bulk_api_request method: :update_exercise_calculations,
+                           requests: requests,
+                           keys: [ :algorithm_name, :exercise_uuids ]
         end
 
         def use_fake_client
@@ -73,7 +103,8 @@ module OpenStax
           result
         end
 
-        def single_api_request(method:, request: nil, keys: [], optional_keys: [], result_class: Hash)
+        def single_api_request(method:, request: nil, keys: [],
+                               optional_keys: [], result_class: Hash)
           verified_request = verify_and_slice_request method: method,
                                                       request: request,
                                                       keys: keys,
