@@ -19,6 +19,28 @@ module OpenStax
         # API methods
         #
 
+        def fetch_clue_calculations(request)
+          single_api_request url: :fetch_clue_calculations, request: request
+        end
+
+        def fetch_exercise_calculations(request)
+          single_api_request url: :fetch_exercise_calculations, request: request
+        end
+
+        def update_clue_calculations(requests)
+          bulk_api_request url: :update_clue_calculations,
+                           requests: requests,
+                           requests_key: :clue_calculation_updates,
+                           responses_key: :clue_calculation_update_responses
+        end
+
+        def update_exercise_calculations(requests)
+          bulk_api_request url: :update_exercise_calculations,
+                           requests: requests,
+                           requests_key: :exercise_calculation_updates,
+                           responses_key: :exercise_calculation_update_responses
+        end
+
         protected
 
         def absolutize_url(url)

@@ -1,6 +1,6 @@
 require 'vcr_helper'
 
-RSpec.shared_examples 'a biglearn scheduler client' do
+RSpec.shared_examples 'a biglearn scheduler api client' do
   let(:configuration) { OpenStax::Biglearn::Scheduler.configuration }
   subject(:client)    { described_class.new(configuration) }
 
@@ -38,10 +38,10 @@ RSpec.shared_examples 'a biglearn scheduler client' do
 
   before(:all, when_tagged_with_vcr) do
     VCR.configure do |config|
-      config.define_cassette_placeholder('<CLUE DATA 1>'     ) { clue_data_1      }
-      config.define_cassette_placeholder('<CLUE DATA 2>'     ) { clue_data_2      }
-      config.define_cassette_placeholder('<EXERCISE UUIDS 1>') { exercise_uuids_1 }
-      config.define_cassette_placeholder('<EXERCISE UUIDS 2>') { exercise_uuids_2 }
+      config.define_cassette_placeholder('<CLUE DATA 1>'     ) { clue_data_1.to_json      }
+      config.define_cassette_placeholder('<CLUE DATA 2>'     ) { clue_data_2.to_json      }
+      config.define_cassette_placeholder('<EXERCISE UUIDS 1>') { exercise_uuids_1.to_json }
+      config.define_cassette_placeholder('<EXERCISE UUIDS 2>') { exercise_uuids_2.to_json }
     end
   end
 
@@ -68,14 +68,16 @@ RSpec.shared_examples 'a biglearn scheduler client' do
           clue_data: clue_data_2
         }
       ],
-      [
-        {
-          calculation_status: 'calculation_accepted'
-        },
-        {
-          calculation_status: 'calculation_accepted'
-        }
-      ]
+      -> do
+        [
+          {
+            calculation_status: be_in(['calculation_accepted', 'calculation_unknown'])
+          },
+          {
+            calculation_status: be_in(['calculation_accepted', 'calculation_unknown'])
+          }
+        ]
+      end
     ],
     [
       :update_exercise_calculations,
@@ -89,14 +91,16 @@ RSpec.shared_examples 'a biglearn scheduler client' do
           exercise_uuids: exercise_uuids_2
         }
       ],
-      [
-        {
-          calculation_status: 'calculation_accepted'
-        },
-        {
-          calculation_status: 'calculation_accepted'
-        }
-      ]
+      -> do
+        [
+          {
+            calculation_status: be_in(['calculation_accepted', 'calculation_unknown'])
+          },
+          {
+            calculation_status: be_in(['calculation_accepted', 'calculation_unknown'])
+          }
+        ]
+      end
     ]
   ].group_by(&:first).each do |method, examples|
     context "##{method}" do

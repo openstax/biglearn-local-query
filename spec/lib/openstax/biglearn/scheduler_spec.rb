@@ -21,16 +21,16 @@ RSpec.describe OpenStax::Biglearn::Scheduler, type: :external do
       minimum: random_sorted_numbers_1.first,
       most_likely: random_sorted_numbers_1.second,
       maximum: random_sorted_numbers_1.third,
-      ecosystem_uuid: SecureRandom.uuid,
-      is_real: [true, false].sample
+      is_real: [true, false].sample,
+      ecosystem_uuid: SecureRandom.uuid
     }
     random_sorted_numbers_2 = 3.times.map { rand }.sort
     clue_data_2 = {
       minimum: random_sorted_numbers_2.first,
       most_likely: random_sorted_numbers_2.second,
       maximum: random_sorted_numbers_2.third,
-      ecosystem_uuid: SecureRandom.uuid,
-      is_real: [true, false].sample
+      is_real: [true, false].sample,
+      ecosystem_uuid: SecureRandom.uuid
     }
 
     exercise_uuids_1 = rand(10).times.map { SecureRandom.uuid }

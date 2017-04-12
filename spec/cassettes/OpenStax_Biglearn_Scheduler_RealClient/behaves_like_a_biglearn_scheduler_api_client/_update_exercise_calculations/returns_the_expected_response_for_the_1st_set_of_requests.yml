@@ -1,0 +1,54 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: http://localhost:3000/update_exercise_calculations
+    body:
+      encoding: UTF-8
+      string: '{"exercise_calculation_updates":[{"algorithm_name":"local_query","exercise_uuids":<EXERCISE
+        UUIDS 1>,"calculation_uuid":"<UPDATE_EXERCISE_CALCULATIONS EXAMPLE 1 CALCULATION
+        1 UUID>"},{"algorithm_name":"local_query","exercise_uuids":<EXERCISE UUIDS
+        2>,"calculation_uuid":"<UPDATE_EXERCISE_CALCULATIONS EXAMPLE 1 CALCULATION
+        2 UUID>"}]}'
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 11 Apr 2017 23:58:09 GMT
+      Connection:
+      - close
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      Content-Type:
+      - application/json; charset=utf-8
+      Etag:
+      - W/"fae9e5596d5e3188a0486fc2d2e560d7"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - dfd45a9d-65e9-4f85-907c-f87b1f492766
+      X-Runtime:
+      - '0.037483'
+    body:
+      encoding: UTF-8
+      string: '{"exercise_calculation_update_responses":[{"calculation_uuid":"<UPDATE_EXERCISE_CALCULATIONS
+        EXAMPLE 1 CALCULATION 1 UUID>","calculation_status":"calculation_unknown"},{"calculation_uuid":"<UPDATE_EXERCISE_CALCULATIONS
+        EXAMPLE 1 CALCULATION 2 UUID>","calculation_status":"calculation_unknown"}]}'
+    http_version: 
+  recorded_at: Tue, 11 Apr 2017 23:58:09 GMT
+recorded_with: VCR 3.0.3
