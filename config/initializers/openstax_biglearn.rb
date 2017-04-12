@@ -6,5 +6,5 @@ OpenStax::Biglearn::Scheduler.configure do |config|
   config.secret     = biglearn_scheduler_secrets['secret']
 end
 
-biglearn_scheduler_secrets.fetch('stub', true) ? OpenStax::Biglearn::Scheduler.use_fake_client :
-                                                 OpenStax::Biglearn::Scheduler.use_real_client
+biglearn_scheduler_secrets.fetch('stub', false) ? OpenStax::Biglearn::Scheduler.use_fake_client :
+                                                  OpenStax::Biglearn::Scheduler.use_real_client

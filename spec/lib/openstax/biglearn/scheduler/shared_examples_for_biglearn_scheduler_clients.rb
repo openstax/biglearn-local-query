@@ -4,16 +4,6 @@ RSpec.shared_examples 'a biglearn scheduler api client' do
   let(:configuration) { OpenStax::Biglearn::Scheduler.configuration }
   subject(:client)    { described_class.new(configuration) }
 
-  let(:clue_matcher)  do
-    {
-      min: kind_of(Float),
-      most_likely: kind_of(Float),
-      max: kind_of(Float),
-      is_real: included_in([true, false]),
-      ecosystem_uuid: kind_of(String)
-    }
-  end
-
   random_sorted_numbers_1 = 3.times.map { rand }.sort
   clue_data_1 = {
     minimum: random_sorted_numbers_1.first,

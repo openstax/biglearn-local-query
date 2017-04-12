@@ -1,4 +1,11 @@
 class Services::CalculateExercises::Service
   def process
+    exercise_calculations = OpenStax::Biglearn::Scheduler.fetch_exercise_calculations
+
+    exercise_calculation_updates = exercise_calculations.map do |exercise_calculation|
+      exercise_calculation.slice(:calculation_uuid, :exercise_uuids)
+    end
+
+    OpenStax::Biglearn::Scheduler.update_exercise_calculations exercise_calculation_updates
   end
 end
