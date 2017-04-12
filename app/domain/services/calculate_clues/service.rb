@@ -5,6 +5,8 @@ class Services::CalculateClues::Service
 
   def process
     clue_calculations = OpenStax::Biglearn::Scheduler.fetch_clue_calculations
+                                                     .fetch(:clue_calculations)
+                                                     .map(&:deep_symbolize_keys)
 
     clue_calculation_updates = clue_calculations.map do |clue_calculation|
       calculation_uuid = clue_calculation.fetch :calculation_uuid

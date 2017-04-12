@@ -7,7 +7,9 @@ RSpec.describe Services::CalculateExercises::Service, type: :service do
 
   context "when no clue_calculations are given by the scheduler" do
     it "sends an empty array of clue_calculation_updates to the scheduler" do
-      expect(OpenStax::Biglearn::Scheduler).to receive(:fetch_exercise_calculations).and_return([])
+      expect(OpenStax::Biglearn::Scheduler).to(
+        receive(:fetch_exercise_calculations)
+      ).and_return(exercise_calculations: [])
       expect(OpenStax::Biglearn::Scheduler).to receive(:update_exercise_calculations).with([])
 
       action
@@ -54,7 +56,7 @@ RSpec.describe Services::CalculateExercises::Service, type: :service do
     it "sends a clue_calculation_update for each given clue_calculation to the scheduler" do
       expect(OpenStax::Biglearn::Scheduler).to(
         receive(:fetch_exercise_calculations)
-      ).and_return(exercise_calculations)
+      ).and_return(exercise_calculations: exercise_calculations)
       expect(OpenStax::Biglearn::Scheduler).to receive(:update_exercise_calculations) do |updates|
         updates.each do |update|
           expected_exercise_uuids = expected_ex_uuids_by_calc_uuid.fetch update[:calculation_uuid]
