@@ -12,6 +12,9 @@ gem 'railties'
 # This allows us to easily start using it in the future if we decide to
 gem 'oauth2'
 
+# URL manipulation
+gem 'addressable'
+
 # Daemonize our custom background tasks
 gem 'daemons'
 

@@ -146,6 +146,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  addressable
   byebug
   daemons
   guard-rspec
