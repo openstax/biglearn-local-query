@@ -118,7 +118,7 @@ module OpenStax
         end
 
         def bulk_api_request(method:, requests:, keys:, optional_keys: [],
-                             result_class: Hash, uuid_key: :request_uuid)
+                             result_class: Hash, uuid_key: :calculation_uuid)
           return {} if requests.blank?
 
           requests_map = {}

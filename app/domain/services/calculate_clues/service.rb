@@ -49,17 +49,17 @@ class Services::CalculateClues::Service
                    0.1 * Math.sqrt(var) + 0.05 )
 
       {
-        min: [p_hat - interval, 0].max,
+        minimum: [p_hat - interval, 0].max,
         most_likely: p_hat,
-        max: [p_hat + interval, 1].min,
+        maximum: [p_hat + interval, 1].min,
         is_real: true,
         ecosystem_uuid: ecosystem_uuid
       }
     else
       {
-        min: 0,
+        minimum: 0,
         most_likely: 0.5,
-        max: 1,
+        maximum: 1,
         is_real: false,
         ecosystem_uuid: ecosystem_uuid
       }
