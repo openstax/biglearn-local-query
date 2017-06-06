@@ -1,5 +1,5 @@
-class Services::CalculateClues::Service
-  MIN_NUM_RESPONSES = 3 # Must be at least 2 to prevent division by 0
+class Services::CalculateClues::Service < Services::ApplicationService
+  MIN_NUM_RESPONSES = 3 # Must be 2 or more to prevent division by 0
   Z_ALPHA = 0.68
   Z_ALPHA_SQUARED = Z_ALPHA**2
 

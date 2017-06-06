@@ -1,4 +1,4 @@
-class Services::CalculateExercises::Service
+class Services::CalculateExercises::Service < Services::ApplicationService
   def process
     exercise_calculations = OpenStax::Biglearn::Scheduler.fetch_exercise_calculations
                                                          .fetch(:exercise_calculations)
