@@ -5,7 +5,10 @@ class Services::CalculateExercises::Service < Services::ApplicationService
                                                          .map(&:symbolize_keys)
 
     exercise_calculation_updates = exercise_calculations.map do |exercise_calculation|
-      exercise_calculation.slice(:calculation_uuid, :exercise_uuids)
+      {
+        calculation_uuid: exercise_calculation.fetch(:calculation_uuid),
+        exercise_uuids: exercise_calculation.fetch(:exercise_uuids).shuffle
+      }
     end
 
     OpenStax::Biglearn::Scheduler.update_exercise_calculations exercise_calculation_updates

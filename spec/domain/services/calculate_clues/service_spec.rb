@@ -87,8 +87,9 @@ RSpec.describe Services::CalculateClues::Service, type: :service do
       expect(OpenStax::Biglearn::Scheduler).to receive(:update_clue_calculations) do |updates|
         updates.each do |update|
           expected_clue_data = expected_clue_data_by_calc_uuid.fetch update[:calculation_uuid]
-          expect(update[:algorithm_name]).to be_nil
           expect(update[:clue_data]).to eq expected_clue_data
+          # Algorithm name is added by the OpenStax::Biglearn::Scheduler class
+          expect(update).not_to have_key(:algorithm_name)
         end
       end
 

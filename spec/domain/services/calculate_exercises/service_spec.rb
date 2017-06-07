@@ -60,8 +60,9 @@ RSpec.describe Services::CalculateExercises::Service, type: :service do
       expect(OpenStax::Biglearn::Scheduler).to receive(:update_exercise_calculations) do |updates|
         updates.each do |update|
           expected_exercise_uuids = expected_ex_uuids_by_calc_uuid.fetch update[:calculation_uuid]
-          expect(update[:algorithm_name]).to be_nil
-          expect(update[:exercise_uuids]).to eq expected_exercise_uuids
+          expect(update[:exercise_uuids]).to match_array expected_exercise_uuids
+          # Algorithm name is added by the OpenStax::Biglearn::Scheduler class
+          expect(update).not_to have_key(:algorithm_name)
         end
       end
 
