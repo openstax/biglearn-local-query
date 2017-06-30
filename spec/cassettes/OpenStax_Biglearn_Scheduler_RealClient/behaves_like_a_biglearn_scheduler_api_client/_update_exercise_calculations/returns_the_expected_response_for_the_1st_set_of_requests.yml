@@ -12,9 +12,11 @@ http_interactions:
         2 UUID>"}]}'
     headers:
       User-Agent:
-      - Faraday v0.9.2
+      - Faraday v0.11.0
       Content-Type:
       - application/json
+      Biglearn-Scheduler-Token:
+      - c88e21d6d158d5200ce4ace9592c3acea06e066ec1b92bc623f7e76cd02b7f8736143afaa1551802f6787bcd0135e0157beace5bb33ed026dbedb53848b75ded
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -25,7 +27,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 11 Apr 2017 23:58:09 GMT
+      - Tue, 27 Jun 2017 23:12:33 GMT
       Connection:
       - close
       X-Frame-Options:
@@ -37,18 +39,18 @@ http_interactions:
       Content-Type:
       - application/json; charset=utf-8
       Etag:
-      - W/"fae9e5596d5e3188a0486fc2d2e560d7"
+      - W/"16d16e7bdd4d948755a8f68dc46ce041"
       Cache-Control:
       - max-age=0, private, must-revalidate
       X-Request-Id:
-      - dfd45a9d-65e9-4f85-907c-f87b1f492766
+      - 8edc77c7-b8cf-40fb-9527-798de71e87f9
       X-Runtime:
-      - '0.037483'
+      - '0.021370'
     body:
       encoding: UTF-8
       string: '{"exercise_calculation_update_responses":[{"calculation_uuid":"<UPDATE_EXERCISE_CALCULATIONS
         EXAMPLE 1 CALCULATION 1 UUID>","calculation_status":"calculation_unknown"},{"calculation_uuid":"<UPDATE_EXERCISE_CALCULATIONS
         EXAMPLE 1 CALCULATION 2 UUID>","calculation_status":"calculation_unknown"}]}'
     http_version: 
-  recorded_at: Tue, 11 Apr 2017 23:58:09 GMT
+  recorded_at: Tue, 27 Jun 2017 23:12:33 GMT
 recorded_with: VCR 3.0.3

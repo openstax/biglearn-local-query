@@ -3,10 +3,11 @@ module OpenStax
     module Scheduler
       class RealClient
 
-        HEADER_OPTIONS = { headers: { 'Content-Type' => 'application/json' } }.freeze
+        HEADER_OPTIONS = { 'Content-Type' => 'application/json'}.freeze
 
         def initialize(biglearn_scheduler_configuration)
           @server_url   = biglearn_scheduler_configuration.server_url
+          @token        = biglearn_scheduler_configuration.token
           @client_id    = biglearn_scheduler_configuration.client_id
           @secret       = biglearn_scheduler_configuration.secret
 
@@ -50,7 +51,11 @@ module OpenStax
         def api_request(method:, url:, body:)
           absolute_uri = absolutize_url(url)
 
-          request_options = body.nil? ? HEADER_OPTIONS : HEADER_OPTIONS.merge(body: body.to_json)
+          header_options = { headers: @token.nil? ? HEADER_OPTIONS : HEADER_OPTIONS.merge(
+              'Biglearn-Scheduler-Token' => @token
+            )
+          }
+          request_options = body.nil? ? header_options : header_options.merge(body: body.to_json)
 
           response = (@oauth_token || @oauth_client).request method, absolute_uri, request_options
 
