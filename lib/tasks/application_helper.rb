@@ -48,16 +48,19 @@ module Tasks
         logger.formatter = Rails.application.config.log_formatter
         logger.level = Rails.application.config.log_level
         Rails.logger = logger
+        ActionController::Base.logger = logger
 
         Worker.new(task_name_string).run
       end
     end
 
-    def define_worker_tasks(task_name, worker_task_prefix = :worker)
-      task(worker_task_prefix => :environment) { |task, args| run_daemon task_name, args }
+    def define_worker_tasks(task_name, worker_task_suffix = :worker)
+      task "#{task_name}:#{worker_task_suffix}" => :environment do |task, args|
+        run_daemon task_name, args
+      end
 
       DAEMON_COMMANDS.each do |command|
-        task "#{worker_task_prefix}:#{command}" => :environment do |task, args|
+        task "#{task_name}:#{worker_task_suffix}:#{command}" => :environment do |task, args|
           run_daemon task_name, [command.to_s] + args.to_a
         end
       end

@@ -1,6 +1,6 @@
 require 'rake_helper'
 
-RSpec.describe 'calculate_exercises:all', type: :task do
+RSpec.describe 'calculate:exercises', type: :task do
   include_context 'rake'
 
   it 'includes the environment as prerequisite' do
