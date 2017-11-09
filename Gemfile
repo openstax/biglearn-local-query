@@ -18,9 +18,6 @@ gem 'addressable'
 # Daemonize our custom background tasks
 gem 'daemons'
 
-# Real time application monitoring
-gem 'scout_apm', '~> 3.0.x'
-
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
