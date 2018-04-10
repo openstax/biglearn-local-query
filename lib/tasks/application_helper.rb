@@ -43,6 +43,8 @@ module Tasks
         logger.formatter = Rails.application.config.log_formatter
         logger.level = Rails.application.config.log_level
         Rails.logger = logger
+        ActionView::Base.logger = logger
+        Raven.configuration.logger = logger
 
         Worker.new(task_name_string).run
       end
