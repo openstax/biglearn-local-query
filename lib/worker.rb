@@ -1,4 +1,6 @@
 class Worker
+  EXCLUDED_EXCEPTIONS = [ SystemExit ]
+
   def initialize(task_name_string)
     @task_name_string = task_name_string
   end
@@ -15,6 +17,8 @@ class Worker
     task.invoke
   rescue Exception => ex
     log(:fatal) { "#{ex.class.name}: #{ex.message}\n#{ex.backtrace.join("\n")}" }
+
+    Raven.capture_exception(ex) unless EXCLUDED_EXCEPTIONS.include? ex.class
 
     raise ex
   end
