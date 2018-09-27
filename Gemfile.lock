@@ -33,7 +33,7 @@ GEM
     erubis (2.7.0)
     faraday (0.11.0)
       multipart-post (>= 1.2, < 3)
-    ffi (1.9.18)
+    ffi (1.9.25)
     formatador (0.2.5)
     guard (2.14.1)
       formatador (>= 0.2.4)
@@ -166,4 +166,4 @@ DEPENDENCIES
   webmock
 
 BUNDLED WITH
-   1.16.1
+   1.16.5
