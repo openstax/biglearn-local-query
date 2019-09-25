@@ -1,5 +1,8 @@
 require 'rake'
 
+class RescuedError < StandardError
+end
+
 class TestTaskComplete < Exception
 end
 
@@ -19,6 +22,9 @@ module TestTaskCounter
 
     # Raises TestTaskComplete, aborting the Worker, after the given number of runs
     raise TestTaskComplete if count >= MAX_COUNT
+
+    # Otherwise, raises an error that is rescued and ignored
+    raise RescuedError
   end
 end
 
