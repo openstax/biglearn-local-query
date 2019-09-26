@@ -5,13 +5,6 @@ RSpec.describe Worker, type: :lib do
 
   before  { TestTaskCounter.reset }
 
-  context '#run_once' do
-    it 'runs the given task once' do
-      expect{ subject.run_once }.not_to raise_error
-      expect(TestTaskCounter.count).to eq 1
-    end
-  end
-
   context '#run' do
     context 'when the worker is ahead of schedule' do
       let(:run_every) { 10.seconds }
