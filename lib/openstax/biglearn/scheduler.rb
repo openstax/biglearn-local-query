@@ -45,11 +45,13 @@ module OpenStax
 
         def update_exercise_calculations(exercise_calculation_update_requests)
           requests = exercise_calculation_update_requests.map do |request|
-            { algorithm_name: DEFAULT_ALGORITHM_NAME }.merge request
+            {
+              algorithm_name: DEFAULT_ALGORITHM_NAME, ecosystem_matrix_uuid: SecureRandom.uuid
+            }.merge request
           end
           bulk_api_request method: :update_exercise_calculations,
                            requests: requests,
-                           keys: [ :algorithm_name, :exercise_uuids ]
+                           keys: [ :algorithm_name, :ecosystem_matrix_uuid, :exercise_uuids ]
         end
 
         def use_fake_client

@@ -6,7 +6,7 @@ git_source(:github) do |repo_name|
 end
 
 # Use Rails' bootstrap process without Rails itself
-gem 'railties'
+gem 'railties', '~> 5.2.3'
 
 # We use this gem to talk to biglearn-scheduler, even though it does not support OAuth
 # This allows us to easily start using it in the future if we decide to
@@ -38,7 +38,7 @@ end
 group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
-  gem 'spring-watcher-listen', '~> 2.0.0'
+  gem 'spring-watcher-listen'
 
   # Re-run specs when files change
   gem 'spring-commands-rspec'

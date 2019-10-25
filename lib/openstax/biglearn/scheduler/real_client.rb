@@ -2,7 +2,6 @@ module OpenStax
   module Biglearn
     module Scheduler
       class RealClient
-
         HEADER_OPTIONS = { 'Content-Type' => 'application/json'}.freeze
 
         def initialize(biglearn_scheduler_configuration)
@@ -79,10 +78,9 @@ module OpenStax
 
             responses_array = response_hash.fetch responses_key
 
-            responses_array.map{ |response| block_given? ? yield(response) : response }
+            responses_array.map { |response| block_given? ? yield(response) : response }
           end
         end
-
       end
     end
   end
